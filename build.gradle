@@ -63,7 +63,7 @@ dependencies {
   implementation files("${System.getenv('VENDOR_PATH')}/jmagick.jar")
 
   // MIME Types
-  implementation 'org.apache.tika:tika-core:3.0.0'
+  implementation 'org.apache.tika:tika-core:3.1.0'
 
   // JJWT
   implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
