@@ -1,4 +1,18 @@
 services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    env_file: .env
+    environment:
+      - POSTGRES_HOST=postgres
+      - MINIO_HOST=http://minio:9000
+    depends_on:
+      - postgres
+      - minio
+    networks:
+      - app-network
+
   postgres:
     env_file: .env
     image: postgres:14.2
@@ -37,10 +51,35 @@ services:
     volumes:
       - minio_storage:/data
 
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    extra_hosts:
+      - "172.17.0.1:host-gateway"
+    networks:
+      - app-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_storage:/var/lib/grafana
+    networks:
+      - app-network
+
 volumes:
   minio_storage: { }
   database_storage:
     driver: local
+  grafana_storage: { }
 
 networks:
   app-network:
