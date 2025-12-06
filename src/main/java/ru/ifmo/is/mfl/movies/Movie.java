@@ -1,14 +1,20 @@
 package ru.ifmo.is.mfl.movies;
 
-import lombok.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
+import lombok.*;
+import ru.ifmo.is.mfl.categories.Category;
 import ru.ifmo.is.mfl.common.framework.CrudEntity;
+import ru.ifmo.is.mfl.countries.Country;
+import ru.ifmo.is.mfl.genres.Genre;
+import ru.ifmo.is.mfl.people.MoviePerson;
+import ru.ifmo.is.mfl.tags.Tag;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -22,7 +28,7 @@ public class Movie extends CrudEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movies_id_seq")
   @SequenceGenerator(name = "movies_id_seq", sequenceName = "movies_id_seq", allocationSize = 1)
-  @Column(name="id", nullable=false, unique=true)
+  @Column(name = "id", nullable = false, unique = true)
   private int id;
 
   @NotNull
@@ -47,28 +53,50 @@ public class Movie extends CrudEntity {
   @Column(name = "rating")
   private Float rating;
 
-  @Size(max = 127)
-  @Column(name = "categories")
-  private String categories;
+  @Builder.Default
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(
+    name = "movie_categories",
+    joinColumns = @JoinColumn(name = "movie_id"),
+    inverseJoinColumns = @JoinColumn(name = "category_id")
+  )
+  @ToString.Exclude
+  private Set<Category> categories = new HashSet<>();
 
-  @Size(max = 127)
-  @Column(name = "tags")
-  private String tags;
+  @Builder.Default
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(
+    name = "movie_tags",
+    joinColumns = @JoinColumn(name = "movie_id"),
+    inverseJoinColumns = @JoinColumn(name = "tag_id")
+  )
+  @ToString.Exclude
+  private Set<Tag> tags = new HashSet<>();
 
-  @Size(max = 63)
-  @Column(name = "production_country")
-  private String productionCountry;
+  @Builder.Default
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(
+    name = "movie_countries",
+    joinColumns = @JoinColumn(name = "movie_id"),
+    inverseJoinColumns = @JoinColumn(name = "country_id")
+  )
+  @ToString.Exclude
+  private Set<Country> productionCountries = new HashSet<>();
 
-  @Size(max = 127)
-  @Column(name = "genres")
-  private String genres;
+  @Builder.Default
+  @ManyToMany(fetch = FetchType.LAZY)
+  @JoinTable(
+    name = "movie_genres",
+    joinColumns = @JoinColumn(name = "movie_id"),
+    inverseJoinColumns = @JoinColumn(name = "genre_id")
+  )
+  @ToString.Exclude
+  private Set<Genre> genres = new HashSet<>();
 
-  @Column(name = "actors")
-  private String actors;
-
-  @Size(max = 127)
-  @Column(name = "director")
-  private String director;
+  @Builder.Default
+  @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+  @ToString.Exclude
+  private Set<MoviePerson> people = new HashSet<>();
 
   @Column(name = "seasons")
   private Integer seasons;
@@ -79,6 +107,15 @@ public class Movie extends CrudEntity {
   @NotNull
   @Column(name = "viewed_counter", nullable = false)
   private int viewedCounter;
+  @NotNull
+  @Column(name = "rated_counter", nullable = false)
+  private int ratedCounter;
+  @NotNull
+  @Column(name = "reviewed_counter", nullable = false)
+  private int reviewedCounter;
+  @NotNull
+  @Column(name = "comments_counter", nullable = false)
+  private int commentsCounter;
 
   public void incrementViewedCounter() {
     viewedCounter++;
@@ -88,10 +125,6 @@ public class Movie extends CrudEntity {
     viewedCounter--;
   }
 
-  @NotNull
-  @Column(name = "rated_counter", nullable = false)
-  private int ratedCounter;
-
   public void incrementRatedCounter() {
     ratedCounter++;
   }
@@ -100,10 +133,6 @@ public class Movie extends CrudEntity {
     ratedCounter--;
   }
 
-  @NotNull
-  @Column(name = "reviewed_counter", nullable = false)
-  private int reviewedCounter;
-
   public void incrementReviewedCounter() {
     reviewedCounter++;
   }
@@ -111,10 +140,6 @@ public class Movie extends CrudEntity {
   public void decrementReviewedCounter() {
     reviewedCounter--;
   }
-
-  @NotNull
-  @Column(name = "comments_counter", nullable = false)
-  private int commentsCounter;
 
   public void incrementCommentsCounter() {
     commentsCounter++;

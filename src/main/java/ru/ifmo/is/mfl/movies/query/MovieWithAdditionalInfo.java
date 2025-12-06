@@ -1,10 +1,21 @@
 package ru.ifmo.is.mfl.movies.query;
 
-import lombok.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import ru.ifmo.is.mfl.categories.Category;
+import ru.ifmo.is.mfl.countries.Country;
+import ru.ifmo.is.mfl.genres.Genre;
 import ru.ifmo.is.mfl.movies.Movie;
+import ru.ifmo.is.mfl.people.MoviePerson;
+import ru.ifmo.is.mfl.tags.Tag;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -26,10 +37,9 @@ public class MovieWithAdditionalInfo extends Movie {
       movie.getRating(),
       movie.getCategories(),
       movie.getTags(),
-      movie.getProductionCountry(),
+      movie.getProductionCountries(),
       movie.getGenres(),
-      movie.getActors(),
-      movie.getDirector(),
+      movie.getPeople(),
       movie.getSeasons(),
       movie.getSeries(),
       movie.getViewedCounter(),
@@ -49,12 +59,11 @@ public class MovieWithAdditionalInfo extends Movie {
     LocalDate releaseDate,
     Integer duration,
     Float rating,
-    @Size(max = 127) String categories,
-    @Size(max = 127) String tags,
-    @Size(max = 63) String productionCountry,
-    @Size(max = 127) String genres,
-    String actors,
-    @Size(max = 127) String director,
+    Set<Category> categories,
+    Set<Tag> tags,
+    Set<Country> productionCountries,
+    Set<Genre> genres,
+    Set<MoviePerson> people,
     Integer seasons,
     Integer series,
     int viewedCounter,
@@ -74,10 +83,9 @@ public class MovieWithAdditionalInfo extends Movie {
       rating,
       categories,
       tags,
-      productionCountry,
+      productionCountries,
       genres,
-      actors,
-      director,
+      people,
       seasons,
       series,
       viewedCounter,

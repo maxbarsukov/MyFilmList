@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class MovieUpdateDto {
@@ -18,22 +19,17 @@ public class MovieUpdateDto {
 
   private JsonNullable<Integer> duration;
 
-  @Size(max = 127)
-  private JsonNullable<String> categories;
+  private JsonNullable<List<String>> categories;
 
-  @Size(max = 127)
-  private JsonNullable<String> tags;
+  private JsonNullable<List<String>> tags;
 
-  @Size(max = 63)
-  private JsonNullable<String> productionCountry;
+  private JsonNullable<List<String>> productionCountries;
 
-  @Size(max = 127)
-  private JsonNullable<String> genres;
+  private JsonNullable<List<String>> genres;
 
-  private JsonNullable<String> actors;
+  private JsonNullable<List<String>> actors;
 
-  @Size(max = 127)
-  private JsonNullable<String> director;
+  private JsonNullable<List<String>> directors;
 
   private JsonNullable<Integer> seasons;
 

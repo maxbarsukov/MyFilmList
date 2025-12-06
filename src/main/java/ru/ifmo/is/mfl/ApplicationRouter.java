@@ -78,6 +78,13 @@ public class ApplicationRouter {
         .requestMatchers(HttpMethod.GET, "/api/users/*/reviews").permitAll() // Get all user's reviews
         .requestMatchers(HttpMethod.POST, "/api/movies/*/reviews").hasRole("USER") // Add review to movie
 
+        // Autocomplete search
+        .requestMatchers(HttpMethod.GET, "/api/tags").permitAll()
+        .requestMatchers(HttpMethod.GET, "/api/genres").permitAll()
+        .requestMatchers(HttpMethod.GET, "/api/categories").permitAll()
+        .requestMatchers(HttpMethod.GET, "/api/countries").permitAll()
+        .requestMatchers(HttpMethod.GET, "/api/people").permitAll()
+
         // Movies
         .requestMatchers(HttpMethod.GET, "/api/movies/**").permitAll()
         .requestMatchers(HttpMethod.POST, "/api/movies/*/poster").hasRole("ADMIN")

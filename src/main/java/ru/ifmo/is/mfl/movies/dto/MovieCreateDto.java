@@ -4,6 +4,7 @@ import lombok.Data;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class MovieCreateDto {
@@ -17,22 +18,17 @@ public class MovieCreateDto {
 
   private Integer duration;
 
-  @Size(max = 127)
-  private String categories;
+  private List<String> categories;
 
-  @Size(max = 127)
-  private String tags;
+  private List<String> tags;
 
-  @Size(max = 63)
-  private String productionCountry;
+  private List<String> productionCountries;
 
-  @Size(max = 127)
-  private String genres;
+  private List<String> genres;
 
-  private String actors;
+  private List<String> actors;
 
-  @Size(max = 127)
-  private String director;
+  private List<String> directors;
 
   private Integer seasons;
 
