@@ -16,7 +16,7 @@ java {
 }
 
 tasks.withType(JavaExec).configureEach {
-  environment('LD_LIBRARY_PATH', "${rootDir}/${System.getenv('VENDOR_PATH')}")
+  environment('LD_LIBRARY_PATH', "${rootDir}/${System.getenv('VENDOR_PATH') ?: 'vendor'}")
 }
 
 configurations {
@@ -60,7 +60,7 @@ dependencies {
   implementation 'io.minio:minio:8.5.14'
 
   // ImageMagick
-  implementation files("${System.getenv('VENDOR_PATH')}/jmagick.jar")
+  implementation files("${System.getenv('VENDOR_PATH') ?: 'vendor'}/jmagick.jar")
 
   // MIME Types
   implementation 'org.apache.tika:tika-core:3.0.0'
@@ -90,10 +90,18 @@ dependencies {
   // DevTools
   developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
+  // Observability
+  implementation 'org.springframework.boot:spring-boot-starter-actuator'
+  implementation 'io.micrometer:micrometer-registry-prometheus'
+  implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
+
   // Testing
   testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testImplementation 'org.springframework.security:spring-security-test'
+  testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+  testImplementation 'org.testcontainers:junit-jupiter'
+  testImplementation 'org.testcontainers:postgresql'
 }
 
 jacoco {
@@ -126,4 +134,5 @@ tasks.named('test') {
   testLogging {
     exceptionFormat = 'full'
   }
+  systemProperty 'java.library.path', "${rootDir}/${System.getenv('VENDOR_PATH') ?: 'vendor'}"
 }
