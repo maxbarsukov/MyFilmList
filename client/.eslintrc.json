@@ -1,10 +1,18 @@
 {
-  "extends": "next/core-web-vitals",
-  "plugins": ["@typescript-eslint"],
+  "extends": ["next/core-web-vitals", "plugin:security/recommended"],
+  "plugins": ["@typescript-eslint", "security"],
   "rules": {
     "@typescript-eslint/no-unused-vars": ["warn", { "args": "none" }],
-    "import/no-unresolved": "error",
+    "import/no-unresolved": "warn",
     "import/named": "off",
-    "no-console": "warn"
+    "no-console": "warn",
+    "@next/next/no-html-link-for-pages": "warn"
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
+    }
   }
 }

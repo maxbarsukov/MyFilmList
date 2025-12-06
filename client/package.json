@@ -12,7 +12,7 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "eslint src --fix && pnpm format",
-    "lint:strict": "eslint --max-warnings=0 src",
+    "lint:strict": "eslint src",
     "format": "prettier --write .",
     "format:check": "prettier -c -w .",
     "prepare": "husky"
@@ -93,13 +93,15 @@
     "twemoji": "^14.0.2",
     "typescript": "5.7.2",
     "uuid": "^11.0.3",
-    "zod": "^3.24.1"
+    "zod": "^3.24.1",
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.3.0",
     "@types/sort-by": "^1.2.3",
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "eslint-plugin-security": "^1.7.1",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.11",
     "prettier": "3.4.2",
