@@ -30,6 +30,9 @@ public class ApplicationRouter {
         // Swagger UI (documentation)
         .requestMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
 
+        // Actuator
+        .requestMatchers("/actuator/**").permitAll()
+
         // Feed
         .requestMatchers(HttpMethod.GET, "/api/movies/feed").permitAll() // Every user can view recommended movies
         .requestMatchers(HttpMethod.GET, "/api/watchlists/feed").permitAll() // Every user can view recommended watchlists
