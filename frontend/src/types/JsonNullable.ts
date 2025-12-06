@@ -1,1 +1,0 @@
-export type JsonNullable<T> = T | null | undefined;
