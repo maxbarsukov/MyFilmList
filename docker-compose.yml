@@ -6,7 +6,7 @@ services:
     env_file: .env
     environment:
       - POSTGRES_HOST=postgres
-      - MINIO_HOST=http://minio:9000
+      - MINIO_HOST=http://minio
     depends_on:
       - postgres
       - minio
