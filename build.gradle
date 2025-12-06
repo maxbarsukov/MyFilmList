@@ -142,6 +142,7 @@ tasks.named('test') {
 
 sonar {
   properties {
+    property 'sonar.organization', 'maxbarsukov'
     property 'sonar.projectKey', 'MyFilmList'
     property 'sonar.projectName', 'MyFilmList'
     property 'sonar.host.url', 'https://sonarcloud.io'
